@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <h4 class="content-subhead">Listagem de Cursos do Simple Mooc</h4>
+            <p>Abaixo a lista de cursos disponíveis na plataforma</p>
+        </div>
+    </div>
+</div>
+
+{% for curso in courses %}
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1-3">
+        <div class="l-box">
+            <a href=""><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/800px-Python-logo-notext.svg.png" alt="{{ curso.name }}"></a>
+        </div>
+    </div>
+    <div class="pure-u-2-3">
+        <div class="l-box">
+            <h4 class="content-subhead"><a href="" title="">{{ curso.name }}</a></h4>
+            <h3>Um curso para quem quer aprender Web com Python de forma rápida e objetiva</h3>
+            <p>
+                {{ curso.description }}
+            </p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
