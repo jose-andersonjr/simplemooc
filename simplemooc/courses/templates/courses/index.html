@@ -17,17 +17,29 @@
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1-3">
         <div class="l-box">
+            <a href="{{ curso.get_absolute_url }}"> <!--Essa função busca o slug do curso em questão-->
+            <!--Também pode ser feito dessa forma
+            <a href="% url 'courses:details' curso.slug %" entre chaves>-->
             {% if curso.image %}
-                <a href=""><img src="{{ curso.image.url }}" alt="{{ curso.name }}"></a>
+            <img src="{{ curso.image.url }}" alt="{{ curso.name }}"></a>
             {% else %}
-                <a href=""><img src="{% static 'img/chessthumb.png' %}" alt="imagem padrão"></a>
+            <img src="{% static 'img/chessthumb.png' %}" alt="imagem padrão"></a>
             {% endif %}
+            </a>
         </div>
     </div>
     <div class="pure-u-2-3">
         <div class="l-box">
-            <h4 class="content-subhead"><a href="" title="">{{ curso.name }}</a></h4>
+            <h4 class="content-subhead"><a href="{{ curso.get_absolute_url }}" title="">{{ curso.name }}</a></h4>
             {{ curso.description|linebreaks }}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <p>Nenhum curso está disponível na plataforma</p>
         </div>
     </div>
 </div>

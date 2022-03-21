@@ -1,6 +1,7 @@
 from turtle import update
 from django.db import models
 from django.forms import DateField
+from django.urls import reverse
 
 # Create your models here.
 class CourseManager(models.Manager):
@@ -21,6 +22,10 @@ class Course(models.Model):
     description = models.TextField(
         'Descrição', blank=True
         )
+    
+    large_description = models.TextField(
+        'Sobre o curso', blank=True
+    )
 
     start_date = models.DateField(
         'Data de Início', null=True, blank=True
@@ -48,3 +53,6 @@ class Course(models.Model):
         verbose_name = 'Curso'
         verbose_name_plural = 'Cursos'
         ordering = ['name'] #['-name']
+
+    def get_absolute_url(self):
+        return reverse('details', args=[self.slug]) #essa funcão recebe envia o slug do curso em questão como parâmetro para a o arquivo details.html 
