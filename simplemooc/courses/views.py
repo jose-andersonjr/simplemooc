@@ -25,13 +25,14 @@ def anuncios(request):
 
 def details(request, slug):
     curso = get_object_or_404(Course, slug=slug)
-    context = {'is_valid':False}
+    context = {}
     if request.method == 'POST':
         form = ContactCourse(request.POST) #request.POST aplica as respostas do formulario no no objeto form da classe ContactCourse
         if form.is_valid():
             context['is_valid'] = True
             print(form.cleaned_data['name'])
             print(form.cleaned_data['message'])
+            form.send_mail(curso)
             form = ContactCourse()
             
     else:

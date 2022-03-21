@@ -1,5 +1,8 @@
 from cProfile import label
 from django import forms
+from django.core.mail import send_mail
+from django.conf import settings
+from simplemooc.settings import CONTACT_EMAIL
 
 class ContactCourse(forms.Form):
 
@@ -12,4 +15,17 @@ class ContactCourse(forms.Form):
     message = forms.CharField(
         label="Mensagem/Dúvida", widget=forms.Textarea
         )#colocando a opção required=false os campos deixam de ser obrigatorios
-        
+
+    def send_mail(self, curso):
+        subject = 'Contato Curso sobre o curso [%s]' % curso
+        message = 'Nome: %(name)s; E-mail: %(email)s; Mensage:%(message)s'
+        context = {
+            'name': self.cleaned_data['name'],
+            'email': self.cleaned_data['email'],
+            'message': self.cleaned_data['message']
+
+        }
+        message = message % context
+        send_mail(
+            subject, message, settings.DEFAULT_FROM_EMAIL, [settings.CONTACT_EMAIL]
+            )
