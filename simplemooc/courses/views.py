@@ -33,10 +33,12 @@ def details(request, slug):
             print(form.cleaned_data['name'])
             print(form.cleaned_data['message'])
             form.send_mail(curso)
+            context['is_valid'] = False
             form = ContactCourse()
             
     else:
         form = ContactCourse() #vai enviar ele em branco
+    form = ContactCourse()
     context['form'] = form
     context['curso'] = curso
     template_name = 'courses/details.html'
