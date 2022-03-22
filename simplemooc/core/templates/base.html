@@ -1,4 +1,3 @@
-<!doctype html>
 {% load static %} <!-- é uma Template tag -->
 <html lang="pt-br">
 <head>
@@ -16,7 +15,7 @@
         <ul>
             <li class="pure-menu-selected"><a href="{% url 'home' %}">Início</a></li>
             <li><a href="{% url 'index' %}">Cursos</a></li>
-            <li><a href="#">Entrar</a></li>
+            <li><a href="{% url 'login' %}">Entrar</a></li>
             <li><a href="{% url 'contact' %}">Contato</a></li>
             <li><a href="{% url 'anuncios' %}">Anuncios</a></li>
         </ul>

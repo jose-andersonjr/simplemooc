@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('simplemooc.core.urls')), #Essa linha de comando vai linkar o arquivo de urls da pasta do projeto
     path('courses/', include('simplemooc.courses.urls')),  #para o arquivo urls da pasta core, lá vamos encontrar as demais urls a serem usadas
+    path('contas/', include('simplemooc.accounts.urls')),
 ]
 
 if settings.DEBUG:

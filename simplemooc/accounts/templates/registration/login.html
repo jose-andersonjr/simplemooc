@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <h2>Informe seus dados de cadastro</h2>
+        <form class="pure-form pure-form_aligned" method="post">
+            {% csrf_token %}
+            <fieldset>
+                {{ form.non_field_errors }}
+
+                {% for field in form %}
+                <div class="pure-control-group">
+                    {{ field.label_tag }}
+                    {{ field }} <!--O form tratado aqui, é um form padrão do django que tem as label tags Usuário e Senha com o padrão, ele é diferente do form que há em details.html, aquele form foi setado no views.py-->
+                    {{ field.errors }}
+                </div>
+                {% endfor %}
+
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Entrar
+                    </button>
+                </div>
+
+            </fieldset>
+            <ul>
+                <li><a href="#">É novo aqui?</a></li>
+                <li><a href="#">Esqueceu sua senha?</a></li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
