@@ -143,3 +143,8 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 
 CONTACT_EMAIL = 'juniordkj90@gmail.com'
+
+#Auth
+LOGIN_URL = '/contas/entrar' #accounts:login
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_URL = 'logout'
