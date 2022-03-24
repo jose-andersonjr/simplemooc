@@ -15,9 +15,13 @@
         <ul>
             <li class="pure-menu-selected"><a href="{% url 'home' %}">Início</a></li>
             <li><a href="{% url 'index' %}">Cursos</a></li>
-            <li><a href="{% url 'login' %}">Entrar</a></li>
             <li><a href="{% url 'contact' %}">Contato</a></li>
             <li><a href="{% url 'anuncios' %}">Anuncios</a></li>
+            {% if user.is_authenticated %} <!--Verifica se o usuário está autenticado, se há usuário então ele msotra um logout-->
+                <li><a href="{% url 'logout' %}">{{ request.user.username }} está logado - Sair</a></li>
+            {% else %} <!--Se não houver usuário autenticado então ele deve fazer login-->
+                <li><a href="{% url 'login' %}">Entrar</a></li>
+            {% endif %}
         </ul>
     </div>
 </div>
