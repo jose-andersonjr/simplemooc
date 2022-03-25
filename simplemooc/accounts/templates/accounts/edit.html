@@ -1,9 +1,9 @@
 {% extends "accounts/dashboard.html" %}
 
 {% block breadcrumb %}
-    {{ block.super }}
+    {{ block.super }} <!-- Serve para alterar o conteúdo igual o que já existe no block -->
     <li>/</li>
-    <li><a href="{% url 'accounts:edit' %}">Editar Conta</a></li>
+    <li><a href="{% url 'edit' %}">Editar Conta</a></li>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -13,12 +13,12 @@
     <p>Os dados foram alterados com sucesso</p>
     {% endif %}
     <fieldset>
-        {{ form.non_field_errors }}
+        {{ form.non_field_errors }} <!-- Erros que não estão associados a nenhum campo do form enquanto preenchemos -->
         {% for field in form %}
         <div class="pure-control-group">
             {{ field.label_tag }}
             {{ field }}
-            {{ field.errors }}
+            {{ field.errors }} <!-- Se o campo tiver erro ele mostra, se não, não mostra -->
         </div>
         {% endfor %}
         <div class="pure-controls">

@@ -18,3 +18,17 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class EditAccountForm(forms.ModelForm): #modelform vai gerar um dicionario a partir dos campos que o modelo ja tem
+    def clean_email(self): #função de validação do email, tambem pode ser usado para alguma manipulação no valor
+        email = self.cleaned_data['email']
+        queryset = User.objects.filter(
+            email=email).exclude(pk=self.instance.pk).exists()#variavel instance remete a instancia que esta sendo alterada no momento
+        if queryset:
+            raise forms.ValidationError('Já existe um usuário com esse e-mail')
+        return email
+    
+    class Meta:
+        model = User #e o model que ele recebera pra fazer o fomr vai ser o User
+        fields = ['username', 'email', 'first_name', 'last_name'] #os campos que queremos que o formulario pode alterar
+    

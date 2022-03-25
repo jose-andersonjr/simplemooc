@@ -145,6 +145,6 @@ EMAIL_PORT = 587
 CONTACT_EMAIL = 'juniordkj90@gmail.com'
 
 #Auth
-LOGIN_URL = '/conta/entrar' #accounts:login
+LOGIN_URL = '/conta/entrar' #essa é uma função automática do django, após faz o login na conta ele redireciona para cá
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
