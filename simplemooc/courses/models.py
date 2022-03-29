@@ -1,4 +1,5 @@
 from turtle import update
+from django.conf import settings
 from django.db import models
 from django.forms import DateField
 from django.urls import reverse
@@ -56,3 +57,29 @@ class Course(models.Model):
 
     def get_absolute_url(self):
         return reverse('details', args=[self.slug]) #essa funcão recebe envia o slug do curso em questão como parâmetro para a o arquivo details.html 
+    
+class Enrollment(models.Model):
+    STATUS_CHOICES = (
+        (0, 'Pendente'),
+        (1, 'Aprovado'),
+        (2, 'Cancelado'),
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, verbose_name='Usuário', 
+        related_name='enrollments', on_delete=models.CASCADE
+    )
+    curso = models.ForeignKey(
+        Course, verbose_name='Curso', related_name='enrollments',
+        on_delete=models.CASCADE
+    )
+    status = models.IntegerField('Situação', choices=STATUS_CHOICES, default=0, blank=True
+    )
+    created_at = models.DateTimeField('Criado em:', auto_now_add=True)
+    update_at = models.DateTimeField('Atualizado em:', auto_now=True)
+    
+    
+    
+    class Meta:
+        verbose_name = 'Inscrição'
+        verbose_name_plural = 'Inscrições'
+        unique_together = (('user', 'curso'),) #índice de unicidade, so pode existir um usuario e um curso juntos, ou seja, se vc esta em um curso nao pdoe se inscrever de novo 
