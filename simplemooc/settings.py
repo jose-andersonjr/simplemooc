@@ -148,3 +148,4 @@ CONTACT_EMAIL = 'juniordkj90@gmail.com'
 LOGIN_URL = '/conta/entrar' #essa é uma função automática do django, após faz o login na conta ele redireciona para cá
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
+AUTH_USER_MODEL = 'accounts.User' #a partir de agora o django sabe que o model de usuário é o nosso model não o model que ele provê por padrão
