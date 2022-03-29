@@ -28,8 +28,9 @@ class PasswordResetForm(forms.Form):
         context = {
             'reset':reset,
         }
-        send_mail_template(subject, template_name, context, recipient_list, 
-    from_email=settings.DEFAULT_FROM_EMAIL, fail_silently=False)
+        send_mail_template(
+            subject, template_name, context, [user.email]
+        )
         
 
 
