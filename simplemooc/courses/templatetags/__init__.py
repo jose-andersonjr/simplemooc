@@ -1,0 +1,1 @@
+#O arquivo que for criado aqui o Django vai reconhecer como um módulo que eu posso usar

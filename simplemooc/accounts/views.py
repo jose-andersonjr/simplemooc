@@ -8,14 +8,17 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, SetP
 from simplemooc.accounts.forms import RegisterForm, EditAccountForm, PasswordResetForm
 from simplemooc.accounts.models import PasswordReset
 from simplemooc.core.utils import generate_hash_key
+from django.contrib import messages
+from simplemooc.courses.models import Enrollment
 # Create your views here.
 
 User = get_user_model()
 
 @login_required #quando a função abaixo é chamada, ele vai verificar se o user está logado, e vai executar a funcao somente se o usuário estiver logado
 def dashboard(request):
+    context = {}
     template_name = 'accounts/dashboard.html'
-    return render(request, template_name)
+    return render(request, template_name, context)
 
 @login_required
 def edit(request):
@@ -25,8 +28,8 @@ def edit(request):
         form = EditAccountForm(request.POST, instance=request.user) #instance request vai verificar dados do usuario logado
         if form.is_valid():
             form.save()
-            form = EditAccountForm(instance=request.user)
-            context['success'] = True
+            messages.success('Os dados da conta foram alterados com sucesso')
+            return redirect(dashboard)
     else:
         form = EditAccountForm(instance=request.user)
     context['form'] = form
@@ -84,3 +87,4 @@ def password_reset_confirm(request, key):
         form.save()
         context['success'] = True
     return render(request, template_name, context)
+

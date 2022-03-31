@@ -1,0 +1,22 @@
+{% extends "courses/course_dashboard.html" %}
+
+{% block dashboard_content %}
+
+{% for anuncio in anuncios %}
+<div class="well">
+    <h2>{{ anuncio.titulo }}</h2>
+    {{ anuncio.content | linebreaks}}
+    <p>
+        <a href="#comments" title="">
+        <i class="fa fa-comments-o"></i>
+        {% with comments_count=anuncio.comments.count %}  <!-- serve para realizar determinadas ações jogue numa variavel e a variavel possa ser usada em determinador bloco -->
+        {{ comments_count }}
+        Comentário{{ comments_count | pluralize:"y, ies" }}
+        {% endwith %}
+        </a>
+    </p>
+</div>
+{% empty %}
+<h2>Nenhum anuncio criado</h2>
+{% endfor %}
+{% endblock %}

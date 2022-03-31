@@ -6,7 +6,9 @@
     <meta name="description" content="Simple MOOC - Uma simples plataforma de ensino a distância" />
     <title>Simple MOOC</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
 </head>
 <body>
 <div class="header">
@@ -26,6 +28,11 @@
         </ul>
     </div>
 </div>
+<aside class="pure-u-1">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</aside>
 <div class="content">
     {% block content %}
     <!--Aqui é o lugar odne eu posso preencher com outros arquivos html-->

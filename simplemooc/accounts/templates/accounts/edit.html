@@ -9,9 +9,11 @@
 {% block dashboard_content %}
 <form class="pure-form pure-form-stacked" method="post">
     {% csrf_token %}
-    {% if success %}
-    <p>Os dados foram alterados com sucesso</p>
-    {% endif %}
+    <aside class="pure-u-1">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </aside>
     <fieldset>
         {{ form.non_field_errors }} <!-- Erros que não estão associados a nenhum campo do form enquanto preenchemos -->
         {% for field in form %}
