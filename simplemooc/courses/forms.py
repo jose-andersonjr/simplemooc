@@ -1,9 +1,11 @@
 from cProfile import label
+from dataclasses import field
 from django import forms
 from django.core.mail import send_mail
 from django.conf import settings
 from simplemooc.settings import CONTACT_EMAIL
 from simplemooc.core.mail import send_mail_template
+from .models import Comment
 
 
 class ContactCourse(forms.Form):
@@ -31,3 +33,9 @@ class ContactCourse(forms.Form):
         send_mail_template(
             subject, template_name, context, [settings.CONTACT_EMAIL], 
         )
+        
+class FormComentario(forms.ModelForm):
+    class Meta:
+        model = Comment
+        field = ['comentario']
+        exclude = ()

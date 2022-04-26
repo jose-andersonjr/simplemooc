@@ -4,14 +4,16 @@
 
 {% for anuncio in anuncios %}
 <div class="well">
-    <h2>{{ anuncio.titulo }}</h2>
+    <h2>
+        <a href="{%  url 'conteudo_anuncios' curso.slug anuncio.pk %}">{{ anuncio.titulo }}</a>
+    </h2>
     {{ anuncio.content | linebreaks}}
     <p>
-        <a href="#comments" title="">
+        <a href="{%  url 'conteudo_anuncios' curso.slug anuncio.pk %}#comments" title="">
         <i class="fa fa-comments-o"></i>
         {% with comments_count=anuncio.comments.count %}  <!-- serve para realizar determinadas ações jogue numa variavel e a variavel possa ser usada em determinador bloco -->
         {{ comments_count }}
-        Comentário{{ comments_count | pluralize:"y, ies" }}
+        Comentário{{ comments_count | pluralize }}
         {% endwith %}
         </a>
     </p>

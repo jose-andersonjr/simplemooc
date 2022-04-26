@@ -1,9 +1,15 @@
+from re import template
+from typing import ValuesView
 from webbrowser import get
 from django.shortcuts import redirect, render, get_object_or_404, redirect
-from .models import Course, Enrollment
-from .forms import ContactCourse
+
+from .models import Announcement, Course, Enrollment
+from .forms import ContactCourse, FormComentario
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from simplemooc.courses import forms
+from pprint import pprint
+
 
 
 # Create your views here.
@@ -92,3 +98,35 @@ def announcements(request, slug):
         'anuncios': curso.anuncios.all()
     }
     return render(request, template, context)
+
+
+@login_required
+def conteudo_anuncios(request, slug, pk): #chave primaria do anuncio
+    curso = get_object_or_404(Course, slug=slug)
+    if not request.user.is_staff:
+        enrollment = get_object_or_404(
+            Enrollment, user=request.user, curso=curso
+        )
+        if not enrollment.is_approved(): #se ele não estiver aprovado
+            messages.error(request, 'A sua inscrição está pendente')
+            return redirect('dashboard')
+    anuncio = get_object_or_404(curso.anuncios.all(), pk=pk)
+    form = FormComentario(request.POST or None)
+    print(form)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user = request.user
+        comment.anuncio = anuncio
+        comment.save()
+        form = FormComentario() 
+        messages.success(request, 'Seu comentário foi enviado com sucesso')
+    template = 'courses/show_announcement.html'
+    anuncio = get_object_or_404(curso.anuncios.all(), pk=pk)#vai pegar todos os anuncios do curso
+    context = { 
+        'curso': curso,
+        'anuncio': anuncio,
+        'form': form,
+    
+    }
+    return render(request, template, context) 
+    
