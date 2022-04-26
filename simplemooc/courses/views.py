@@ -1,5 +1,6 @@
 from re import template
 from typing import ValuesView
+from urllib import request
 from webbrowser import get
 from django.shortcuts import redirect, render, get_object_or_404, redirect
 
@@ -9,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from simplemooc.courses import forms
 from pprint import pprint
+from .decorators import enrollment_required
 
 
 
@@ -83,15 +85,9 @@ def undo_enrollment(request, slug):
     return render(request, template, context)    
 
 @login_required
+@enrollment_required
 def announcements(request, slug):
-    curso = get_object_or_404(Course, slug=slug)
-    if not request.user.is_staff:
-        enrollment = get_object_or_404(
-            Enrollment, user=request.user, curso=curso
-        )
-        if not enrollment.is_approved(): #se ele não estiver aprovado
-            messages.error(request, 'A sua inscrição está pendente')
-            return redirect('dashboard')
+    curso = request.curso
     template = 'courses/announcements.html'
     context = {
         'curso': curso,
@@ -101,15 +97,9 @@ def announcements(request, slug):
 
 
 @login_required
+@enrollment_required
 def conteudo_anuncios(request, slug, pk): #chave primaria do anuncio
-    curso = get_object_or_404(Course, slug=slug)
-    if not request.user.is_staff:
-        enrollment = get_object_or_404(
-            Enrollment, user=request.user, curso=curso
-        )
-        if not enrollment.is_approved(): #se ele não estiver aprovado
-            messages.error(request, 'A sua inscrição está pendente')
-            return redirect('dashboard')
+    curso = request.curso
     anuncio = get_object_or_404(curso.anuncios.all(), pk=pk)
     form = FormComentario(request.POST or None)
     print(form)
