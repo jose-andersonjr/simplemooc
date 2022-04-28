@@ -10,6 +10,8 @@ urlpatterns = [
         name='undo_enrollment'),
     re_path(r'^(?P<slug>[\w_-]+)/anuncios/$', views.announcements, 
         name='announcements'),
-    re_path(r'^(?P<slug>[\w_-]+)/anuncios/(?P<pk>\d+)/$', views.conteudo_anuncios, #chave primeria do anuncio, o seu id
+    re_path(r'^(?P<slug>[\w_-]+)/anuncios/(?P<pk>\d+)/$', views.conteudo_anuncios, #chave primaria do anuncio, o seu id
         name='conteudo_anuncios'),
+    re_path(r'^(?P<slug>[\w_-]+)/aulas/$', views.aulas, name='aulas'),
+    re_path(r'^(?P<slug>[\w_-]+)/aula/(?P<pk>\d+)$', views.aulas, name='aula'),
 ]

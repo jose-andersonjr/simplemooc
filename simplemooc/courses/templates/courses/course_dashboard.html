@@ -1,5 +1,7 @@
 {% extends "accounts/dashboard.html" %}
 
+{% load static %}
+
 {% block breadcrumb %}
     {{ block.super }}
     <li>/</li>
@@ -11,7 +13,7 @@
     {{ curso }}
 </li>
 <li>
-    <a href="#">
+    <a href="{% url 'aulas' curso.slug %}">
         <i class="fa fa-video-camera"></i>
         Aulas e Materiais
     </a>
@@ -23,7 +25,7 @@
     </a>
 </li>
 <li>
-    <a href="#">
+    <a href="{% url 'announcements' curso.slug %}">
         <i class="fa fa-envelope"></i>
         Anúncios
     </a>

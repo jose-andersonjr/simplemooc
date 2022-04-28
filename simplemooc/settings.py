@@ -149,3 +149,4 @@ LOGIN_URL = '/conta/entrar' #essa é uma função automática do django, após f
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 AUTH_USER_MODEL = 'accounts.User' #a partir de agora o django sabe que o model de usuário é o nosso model não o model que ele provê por padrão
+USE_TZ = False

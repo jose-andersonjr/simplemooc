@@ -1,6 +1,7 @@
 from doctest import master
 from re import template
 from tabnanny import verbose
+from time import timezone
 from turtle import update
 from urllib import request
 from django import dispatch
@@ -11,6 +12,7 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from simplemooc.settings import AUTH_USER_MODEL
 from simplemooc.core.mail import send_mail_template
+import datetime
 
 # Create your models here.
 class CourseManager(models.Manager):
@@ -65,6 +67,54 @@ class Course(models.Model):
 
     def get_absolute_url(self):
         return reverse('details', args=[self.slug]) #essa funcão recebe envia o slug do curso em questão como parâmetro para a o arquivo details.html 
+    
+    def aulas_disponiveis(self):
+        today = datetime.datetime.today()
+        return self.aulas.filter(release_date__lte=today)
+        
+class Aula(models.Model):
+    nome = models.CharField('Nome', max_length=100)
+    descricao = models.TextField('Descrição', blank=True)
+    numero = models.IntegerField('Número (ordem)', blank=True, default=0)
+    release_date = models.DateField('Data de liberação da aula: ', blank=True, null=True)
+    curso = models.ForeignKey(Course, verbose_name="Curso", related_name="aulas", on_delete=models.CASCADE)
+    created_at = models.DateTimeField('Criado em:', auto_now_add=True)
+    update_at = models.DateTimeField('Atualizado em:', auto_now=True)
+    
+    def __str__(self):
+        return self.nome
+    
+    def is_available(self):
+        if self.release_date:
+            today = datetime.datetime.today()
+            return self.release_date <= today
+        return False
+    
+    class Meta:
+        
+        verbose_name = "Aula"
+        verbose_name_plural = "Aulas"
+        ordering = ['numero']
+        
+class Materiais(models.Model):
+    
+    nome = models.CharField('Nome', max_length=100)
+    embutido = models.TextField('Vídeo embutido', blank=True)
+    arquivo = models.FileField(upload_to='aulas/materiais', blank=True, null=True)
+    
+    aula = models.ForeignKey(Aula, verbose_name='Aula', related_name='materiais', on_delete=models.CASCADE)
+    
+    def is_embutido(self):
+        return bool(self.embutido)
+    
+    def __str__(self):
+        return self.nome
+    
+    class Meta:
+        verbose_name = 'Material'
+        verbose_name_plural = 'Materiais'
+        
+        
     
 class Enrollment(models.Model):
     STATUS_CHOICES = (
@@ -142,40 +192,3 @@ models.signals.post_save.connect(
     dispatch_uid='post_save_announcement' #verifica se a função já está cadastrada
     )
 
-class Aula(models.Model):
-    nome = models.CharField('Nome', max_length=100)
-    descricao = models.TextField('Descrição', blank=True)
-    numero = models.IntegerField('Número (ordem)', blank=True, default=0)
-    release_date = models.DateField('Data de liberação da aula: ', blank=True, null=True)
-    curso = models.ForeignKey(Course, verbose_name="Curso", related_name="aulas", on_delete=models.CASCADE)
-    created_at = models.DateTimeField('Criado em:', auto_now_add=True)
-    update_at = models.DateTimeField('Atualizado em:', auto_now=True)
-    
-    def __str__(self):
-        return self.nome
-    
-    class Meta:
-        
-        verbose_name = "Aula"
-        verbose_name_plural = "Aulas"
-        ordering = ['numero']
-        
-class Materiais(models.Model):
-    
-    nome = models.CharField('Nome', max_length=100)
-    embutido = models.TextField('Vídeo embutido', blank=True)
-    arquivo = models.FileField(upload_to='aulas/materiais', blank=True, null=True)
-    
-    aula = models.ForeignKey(Aula, verbose_name='Aula', related_name='materiais', on_delete=models.CASCADE)
-    
-    def is_embutido(self):
-        return bool(self.embutido)
-    
-    def __str__(self):
-        return self.nome
-    
-    class Meta:
-        verbose_name = 'Material'
-        verbose_name_plural = 'Materiais'
-        
-        

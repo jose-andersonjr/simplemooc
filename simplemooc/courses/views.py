@@ -4,7 +4,7 @@ from urllib import request
 from webbrowser import get
 from django.shortcuts import redirect, render, get_object_or_404, redirect
 
-from .models import Announcement, Course, Enrollment
+from .models import Announcement, Aula, Course, Enrollment
 from .forms import ContactCourse, FormComentario
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -120,3 +120,32 @@ def conteudo_anuncios(request, slug, pk): #chave primaria do anuncio
     }
     return render(request, template, context) 
     
+    
+@login_required
+@enrollment_required
+def aulas(request, slug):
+    curso = request.curso
+    template = 'courses/aulas.html'
+    aulas = curso.aulas_disponiveis()
+    if request.user.is_staff:
+        aulas = curso.aulas.all()
+    context = {
+        'curso': curso,
+        'aulas':aulas
+    }
+    return render(request, template, context)
+
+@login_required
+@enrollment_required
+def aula(request, slug, pk):
+    curso = request.curso
+    aula = get_object_or_404(Aula, pk=pk, curso=curso)
+    if request.user.is_staff and not aula.is_available():
+        messages.error(request, 'Esta aula não esta disponível')
+        return redirect('aulas', slug=curso.slug)
+    template = 'courses/aulas.html'
+    context = {
+        'curso': curso,
+        'aula': aula
+    }
+    return render(request, template, context)
