@@ -143,7 +143,7 @@ def aula(request, slug, pk):
     if request.user.is_staff and not aula.is_available():
         messages.error(request, 'Esta aula não esta disponível')
         return redirect('aulas', slug=curso.slug)
-    template = 'courses/aulas.html'
+    template = 'courses/aula.html'
     context = {
         'curso': curso,
         'aula': aula

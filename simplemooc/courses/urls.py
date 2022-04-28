@@ -13,5 +13,5 @@ urlpatterns = [
     re_path(r'^(?P<slug>[\w_-]+)/anuncios/(?P<pk>\d+)/$', views.conteudo_anuncios, #chave primaria do anuncio, o seu id
         name='conteudo_anuncios'),
     re_path(r'^(?P<slug>[\w_-]+)/aulas/$', views.aulas, name='aulas'),
-    re_path(r'^(?P<slug>[\w_-]+)/aula/(?P<pk>\d+)$', views.aulas, name='aula'),
+    re_path(r'^(?P<slug>[\w_-]+)/aula/(?P<pk>\d+)/$', views.aula, name='aula'),
 ]

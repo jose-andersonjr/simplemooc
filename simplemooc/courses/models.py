@@ -69,7 +69,7 @@ class Course(models.Model):
         return reverse('details', args=[self.slug]) #essa funcão recebe envia o slug do curso em questão como parâmetro para a o arquivo details.html 
     
     def aulas_disponiveis(self):
-        today = datetime.datetime.today()
+        today = datetime.date.today()
         return self.aulas.filter(release_date__lte=today)
         
 class Aula(models.Model):
@@ -86,7 +86,7 @@ class Aula(models.Model):
     
     def is_available(self):
         if self.release_date:
-            today = datetime.datetime.today()
+            today = datetime.date.today()
             return self.release_date <= today
         return False
     
