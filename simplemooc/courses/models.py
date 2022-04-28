@@ -102,7 +102,7 @@ class Materiais(models.Model):
     embutido = models.TextField('Vídeo embutido', blank=True)
     arquivo = models.FileField(upload_to='aulas/materiais', blank=True, null=True)
     
-    aula = models.ForeignKey(Aula, verbose_name='Aula', related_name='materiais', on_delete=models.CASCADE)
+    aula = models.ForeignKey(Aula, verbose_name='Aula', related_name='material', on_delete=models.CASCADE)
     
     def is_embutido(self):
         return bool(self.embutido)

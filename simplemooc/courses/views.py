@@ -1,10 +1,11 @@
 from re import template
+from tracemalloc import get_object_traceback
 from typing import ValuesView
 from urllib import request
 from webbrowser import get
 from django.shortcuts import redirect, render, get_object_or_404, redirect
 
-from .models import Announcement, Aula, Course, Enrollment
+from .models import Announcement, Aula, Course, Enrollment, Materiais
 from .forms import ContactCourse, FormComentario
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -147,5 +148,24 @@ def aula(request, slug, pk):
     context = {
         'curso': curso,
         'aula': aula
+    }
+    return render(request, template, context)
+
+@login_required
+@enrollment_required
+def material(request, slug, pk):
+    curso = request.curso
+    material = get_object_or_404(Materiais, pk=pk, aula__curso=curso)
+    aula = material.aula
+    if not request.user.is_staff and not aula.is_available():
+        messages.error(request, 'Este material não está disponível')
+        return redirect('aula', slug=curso.slug, pk=aula.pk)
+    if not material.is_embutido():
+        return redirect(material.file.url)
+    template = 'courses/material.html'
+    context = {
+        'curso':curso,
+        'aula':aula,
+        'material':material
     }
     return render(request, template, context)
