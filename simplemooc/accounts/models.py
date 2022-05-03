@@ -3,6 +3,7 @@ import re
 from email.policy import default
 from tabnanny import verbose
 from tkinter import CASCADE
+from _tkinter import *
 from django.db import models
 from django.core import validators
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,

@@ -1,1 +1,1 @@
-web: gunicorn simplemooc.wsgi
+web: gunicorn tutorial_heroku.wsgi
