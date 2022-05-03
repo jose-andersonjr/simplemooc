@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-
+import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -150,3 +150,5 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 AUTH_USER_MODEL = 'accounts.User' #a partir de agora o django sabe que o model de usuário é o nosso model não o model que ele provê por padrão
 USE_TZ = False
+
+django_heroku.settings(locals())
