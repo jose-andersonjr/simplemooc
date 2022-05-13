@@ -166,6 +166,6 @@ def material(request, slug, pk):
     context = {
         'curso':curso,
         'aula':aula,
-        'material':material
+        'material': material
     }
     return render(request, template, context)
