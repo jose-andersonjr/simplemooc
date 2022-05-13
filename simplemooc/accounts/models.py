@@ -2,7 +2,7 @@ from argparse import _MutuallyExclusiveGroup
 import re
 from email.policy import default
 from tabnanny import verbose
-from tkinter import CASCADE
+from django.db.models import CASCADE
 from django.db import models
 from django.core import validators
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,

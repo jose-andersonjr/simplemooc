@@ -1,0 +1,23 @@
+{% extends "courses/course_dashboard.html" %}
+
+{% block breadcrumb %}
+    {{ block.super }
+    <li>/</li>
+    <li><a href="{% url 'aulas' curso.slug %}">Aulas</a></li>
+    <li>/</li>
+    <li><a href="{% url 'aula' curso.slug aula.pk %}">{{ aula }}</a></li>
+    <li>/</li>
+    <li><a href="{% url 'material' curso.slug material.pk %}">{{ material }}</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="well">
+    <h2><a href="{% url 'material' curso.slug material.pk %}">Vídeo de apresentação do Curso</a></h2>
+    {{ material.embutido|safe }}
+    <iframe src="//player.vimeo.com/video/42564239" width="500" height="269" frameborder="0"
+    webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    <p>
+        <a href="{% url 'aula' curso.slug aula.pk %}">Voltar</a>
+    </p>
+</div>
+{% endblock %}
