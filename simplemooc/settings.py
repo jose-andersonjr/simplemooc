@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
 
-import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -90,11 +88,6 @@ DATABASES = {
     }
 }
 
-# Heroku settings
-DATABASES['default'] = dj_database_url.config()
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -158,17 +151,4 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 AUTH_USER_MODEL = 'accounts.User' #a partir de agora o django sabe que o model de usuário é o nosso model não o model que ele provê por padrão
 USE_TZ = False
-
-#Configurações Heroku
-django_heroku.settings(locals())
-
-#CONSTANTES HEROKU
-ALLOWED_HOSTS = ['*']
-
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static')
-)
 

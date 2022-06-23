@@ -68,7 +68,7 @@ class Course(models.Model):
     def get_absolute_url(self):
         return reverse('details', args=[self.slug]) #essa funcão recebe envia o slug do curso em questão como parâmetro para a o arquivo details.html 
     
-    def aulas_disponiveis(self):
+    def aulas_liberadas(self):
         today = datetime.date.today()
         return self.aulas.filter(release_date__lte=today)
         

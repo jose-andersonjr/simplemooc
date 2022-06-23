@@ -13,7 +13,7 @@
 {% block dashboard_content %}
 
 <div class="well">
-    <h2><a href="{% url 'aula' curso.slug aula.pk %}">Apresentação do curso</a></h2>
+    <h2><a href="{% url 'aula' curso.slug aula.pk %}">{{ aula }}</a></h2>
     {{ aula.descricao }}
     <p>
         aula aula aula aula aula aula aula aula aula aula aula aula
@@ -37,7 +37,7 @@
             </thead>
             <tbody>
                 {% for material in aula.material.all %}
-                <tr class="{% cycle '' 'pure-table-odd' %}">
+                <tr class="{% cycle '' 'pure-table-odd' %}"> <!-- fazendo uma tabela cor sim e cor não -->
                     <td>
                         {{ material }}
                     </td>
@@ -48,7 +48,7 @@
                             Acessar
                         </a>
                         {% else %}
-                        <a target="_blank" href="{{ material.arquivo.url }}">
+                        <a target="_blank" href="{{ material.file.url }}">
                             <i class="fa fa-download"></i>
                             Baixar
                         </a>

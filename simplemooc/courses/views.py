@@ -127,7 +127,7 @@ def conteudo_anuncios(request, slug, pk): #chave primaria do anuncio
 def aulas(request, slug):
     curso = request.curso
     template = 'courses/aulas.html'
-    aulas = curso.aulas_disponiveis()
+    aulas = curso.aulas_liberadas()
     if request.user.is_staff:
         aulas = curso.aulas.all()
     context = {
@@ -141,7 +141,7 @@ def aulas(request, slug):
 def aula(request, slug, pk):
     curso = request.curso
     aula = get_object_or_404(Aula, pk=pk, curso=curso)
-    if request.user.is_staff and not aula.is_available():
+    if not request.user.is_staff and not aula.is_available():
         messages.error(request, 'Esta aula não esta disponível')
         return redirect('aulas', slug=curso.slug)
     template = 'courses/aula.html'

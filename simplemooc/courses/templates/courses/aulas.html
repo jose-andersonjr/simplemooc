@@ -8,7 +8,7 @@
 {% endblock %}
 {% block dashboard_content %}
 
-{% for aula in curso.aulas_disponiveis %}
+{% for aula in curso.aulas_liberadas %}
 
 <div class="well">
     <h2><a href="{% url 'aula' curso.slug aula.pk %}">{{ aula }}</a></h2>
