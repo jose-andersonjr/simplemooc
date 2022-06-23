@@ -164,7 +164,7 @@ def material(request, slug, pk):
         return redirect(material.file.url)
     template = 'courses/material.html'
     context = {
-        'curso':curso,
+        'curso':curso, 
         'aula':aula,
         'material': material
     }
