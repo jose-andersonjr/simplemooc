@@ -1,15 +1,16 @@
 from tabnanny import verbose
+from tkinter import CASCADE
 from django.db import models
 from taggit.managers import TaggableManager
 from django.conf import settings
 
 
-class Thread(model.Model):
+class Thread(models.Model): #Tópico do forum
     
     titulo = models.CharField('Título', max_length=100)
-    body = models.TextField('Mensagem')
+    corpo = models.TextField('Mensagem')
     autor = models.ForeignKey(
-        settings.AUTH_USER_MODEL, verbose_name='Autor', related_name='threads'
+        settings.AUTH_USER_MODEL, verbose_name='Autor', related_name='threads', on_delete=models.CASCADE
     )
     views = models.IntegerField('Visualizações', blank=True, default=0)
     answers = models.IntegerField('Respostas', blank=True, default=0)
@@ -28,10 +29,10 @@ class Thread(model.Model):
         ordering = ['-modified']
         
         
-class Reply(models.Model):
+class Reply(models.Model):  #Respostas dos usuários
     reply = models.TextField('Resposta')
     autor = models.ForeignKey(
-        settings.AUTH_USER_MODEL, verbose_name='Autor', related_name='replies'
+        settings.AUTH_USER_MODEL, verbose_name='Autor', related_name='replies', on_delete=models.CASCADE
     )    
     
     correct = models.BooleanField('Correta?', blank=True, default=False)

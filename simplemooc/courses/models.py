@@ -166,7 +166,7 @@ class Comment(models.Model):
     announcement = models.ForeignKey(
         Announcement, verbose_name='Anúncio', on_delete=models.CASCADE, related_name='comments'
         )
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="nome_usuario") #quando o usuário for deletado do sistema todas as suas tarefas sao apagadas - on_delete=CASCADE
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Usuário") #quando o usuário for deletado do sistema todas as suas tarefas sao apagadas - on_delete=CASCADE
     comment = models.TextField('Comentário')
     created_at = models.DateTimeField('Criado em:', auto_now_add=True)
     update_at = models.DateTimeField('Atualizado em:', auto_now=True)
