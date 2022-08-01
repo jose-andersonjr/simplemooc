@@ -21,7 +21,7 @@ class Thread(models.Model): #Tópico do forum
 
 
     def __str__(self):
-        return self.title
+        return self.titulo
     
     class Meta:
         verbose_name = 'Tópico'
@@ -30,6 +30,9 @@ class Thread(models.Model): #Tópico do forum
         
         
 class Reply(models.Model):  #Respostas dos usuários
+    thread = models.ForeignKey(
+        Thread, verbose_name='Tópico', related_name='replies', default='', on_delete=models.CASCADE
+        )
     reply = models.TextField('Resposta')
     autor = models.ForeignKey(
         settings.AUTH_USER_MODEL, verbose_name='Autor', related_name='replies', on_delete=models.CASCADE
