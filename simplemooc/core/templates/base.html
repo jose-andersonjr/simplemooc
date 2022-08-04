@@ -1,5 +1,7 @@
-{% load static %} <!-- é uma Template tag -->
+{% load static %}
+<!-- é uma Template tag -->
 <html lang="pt-br">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,39 +10,45 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
     <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css"
+        integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
 </head>
+
 <body>
-<div class="header">
-    <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
-        <a class="pure-menu-heading" href="{% url 'home' %}">SIMPLE MOOC</a>
-        <ul>
-            <li class="pure-menu-selected"><a href="{% url 'home' %}">Início</a></li>
-            <li><a href="{% url 'index' %}">Cursos</a></li>
-            <li><a href="{% url 'contact' %}">Contato</a></li>
-            <li><a href="{% url 'anuncios' %}">Anuncios</a></li>
-            {% if user.is_authenticated %} <!--Verifica se o usuário está autenticado, se há usuário então ele msotra um logout-->
-                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>    
+    <div class="header">
+        <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
+            <a class="pure-menu-heading" href="{% url 'home' %}">SIMPLE MOOC</a>
+            <ul>
+                <li class="pure-menu-selected"><a href="{% url 'home' %}">Início</a></li>
+                <li><a href="{% url 'indexcursos' %}">Cursos</a></li>
+                <li><a href="{% url 'index' %}">Fórum</a></li>
+                <li><a href="{% url 'contact' %}">Contato</a></li>
+                <li><a href="{% url 'anuncios' %}">Anuncios</a></li>
+                {% if user.is_authenticated %}
+                <!--Verifica se o usuário está autenticado, se há usuário então ele msotra um logout-->
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                 <li><a href="{% url 'logout' %}">{{ user }} está logado - Sair</a></li>
-            {% else %} <!--Se não houver usuário autenticado então ele deve fazer login-->
+                {% else %}
+                <!--Se não houver usuário autenticado então ele deve fazer login-->
                 <li><a href="{% url 'login' %}">Entrar</a></li>
-            {% endif %}
-        </ul>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-</div>
-<aside class="pure-u-1">
-    {% for message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %}
-</aside>
-<div class="content">
-    {% block content %}
-    <!--Aqui é o lugar odne eu posso preencher com outros arquivos html-->
-    {% endblock %}
-    <div class="footer">
-        Simple MOOC - Uma simples plataforma de ensino a distância
+    <aside class="pure-u-1">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </aside>
+    <div class="content">
+        {% block content %}
+        <!--Aqui é o lugar odne eu posso preencher com outros arquivos html-->
+        {% endblock %}
+        <div class="footer">
+            Simple MOOC - Uma simples plataforma de ensino a distância
+        </div>
     </div>
-</div>
-<script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
+    <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
 </body>
+
 </html>

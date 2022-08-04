@@ -14,15 +14,15 @@ from pprint import pprint
 from .decorators import enrollment_required
 
 
-
 # Create your views here.
-def index(request):
+def indexcursos(request):
     cursos = Course.objects.all()
     context = {
-        'cursos' : cursos
+        'cursos': cursos
     }
     template_name = 'courses/index.html'
     return render(request, template_name, context)
+
 
 def anuncios(request):
     return render(request, 'courses/anuncios.html')
@@ -35,38 +35,42 @@ def anuncios(request):
     template_name = 'courses/details.html'
     return render(request, template_name, context)
 
+
 def details(request, slug):
     curso = get_object_or_404(Course, slug=slug)
     context = {}
     if request.method == 'POST':
-        form = ContactCourse(request.POST) #request.POST aplica as respostas do formulario no no objeto form da classe ContactCourse
+        # request.POST aplica as respostas do formulario no no objeto form da classe ContactCourse
+        form = ContactCourse(request.POST)
         if form.is_valid():
             context['is_valid'] = True
             print(form.cleaned_data['name'])
             print(form.cleaned_data['message'])
             form.send_mail(curso)
             form = ContactCourse()
-            
+
     else:
-        form = ContactCourse() #vai enviar ele em branco
+        form = ContactCourse()  # vai enviar ele em branco
     form = ContactCourse()
     context['form'] = form
     context['curso'] = curso
     template_name = 'courses/details.html'
     return render(request, template_name, context)
 
+
 @login_required
 def enrollment(request, slug):
     curso = get_object_or_404(Course, slug=slug)
     enrollment, created = Enrollment.objects.get_or_create(
         user=request.user, curso=curso
-    )#esse método vai pegar o usuário atual no determinado curso
+    )  # esse método vai pegar o usuário atual no determinado curso
     if created:
-        #enrollment.active()
+        # enrollment.active()
         messages.success(request, 'Você foi inscrito no curso com sucesso')
     else:
         messages.info(request, 'Você já está inscrito no curso')
     return redirect('dashboard')
+
 
 @login_required
 def undo_enrollment(request, slug):
@@ -83,7 +87,8 @@ def undo_enrollment(request, slug):
         'enrollment': enrollment,
         'curso': curso,
     }
-    return render(request, template, context)    
+    return render(request, template, context)
+
 
 @login_required
 @enrollment_required
@@ -99,7 +104,7 @@ def announcements(request, slug):
 
 @login_required
 @enrollment_required
-def conteudo_anuncios(request, slug, pk): #chave primaria do anuncio
+def conteudo_anuncios(request, slug, pk):  # chave primaria do anuncio
     curso = request.curso
     anuncio = get_object_or_404(curso.anuncios.all(), pk=pk)
     form = FormComentario(request.POST or None)
@@ -109,19 +114,20 @@ def conteudo_anuncios(request, slug, pk): #chave primaria do anuncio
         comment.user = request.user
         comment.anuncio = anuncio
         comment.save()
-        form = FormComentario() 
+        form = FormComentario()
         messages.success(request, 'Seu comentário foi enviado com sucesso')
     template = 'courses/show_announcement.html'
-    anuncio = get_object_or_404(curso.anuncios.all(), pk=pk)#vai pegar todos os anuncios do curso
-    context = { 
+    # vai pegar todos os anuncios do curso
+    anuncio = get_object_or_404(curso.anuncios.all(), pk=pk)
+    context = {
         'curso': curso,
         'anuncio': anuncio,
         'form': form,
-    
+
     }
-    return render(request, template, context) 
-    
-    
+    return render(request, template, context)
+
+
 @login_required
 @enrollment_required
 def aulas(request, slug):
@@ -132,9 +138,10 @@ def aulas(request, slug):
         aulas = curso.aulas.all()
     context = {
         'curso': curso,
-        'aulas':aulas
+        'aulas': aulas
     }
     return render(request, template, context)
+
 
 @login_required
 @enrollment_required
@@ -151,6 +158,7 @@ def aula(request, slug, pk):
     }
     return render(request, template, context)
 
+
 @login_required
 @enrollment_required
 def material(request, slug, pk):
@@ -164,8 +172,8 @@ def material(request, slug, pk):
         return redirect(material.file.url)
     template = 'courses/material.html'
     context = {
-        'curso':curso, 
-        'aula':aula,
+        'curso': curso,
+        'aula': aula,
         'material': material
     }
     return render(request, template, context)

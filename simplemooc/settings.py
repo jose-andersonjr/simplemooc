@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from django.conf.global_settings import TEMPLATES as TCP
 from pathlib import Path
 import os
-
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-4grg)50h7f34*#ct6-(o^3vtb7+mf8j(5$$-kk5z!^v91==@kf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '127.0.0.1', 'localhost', 'testserver', '*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', '*']
 
 
 # Application definition
@@ -40,13 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #apps instalados
+    # apps instalados
     'taggit',
     'simplemooc.core',
     'simplemooc.accounts',
     'simplemooc.courses',
     'simplemooc.forum',
-    
+
+]
+
+
+TEMPLATES = TCP + [
+    'django.core.context_processors.request',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +140,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')
 
 MEDIA_URL = '/media/'
 
-#E-mails
+# E-mails
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'Anderson <mikenzuo@gmail.com>'
@@ -147,10 +152,11 @@ DEFAULT_FROM_EMAIL = 'Anderson <mikenzuo@gmail.com>'
 
 CONTACT_EMAIL = 'juniordkj90@gmail.com'
 
-#Auth
-LOGIN_URL = '/conta/entrar' #essa é uma função automática do django, após faz o login na conta ele redireciona para cá
+# Auth
+# essa é uma função automática do django, após faz o login na conta ele redireciona para cá
+LOGIN_URL = '/conta/entrar'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
-AUTH_USER_MODEL = 'accounts.User' #a partir de agora o django sabe que o model de usuário é o nosso model não o model que ele provê por padrão
+# a partir de agora o django sabe que o model de usuário é o nosso model não o model que ele provê por padrão
+AUTH_USER_MODEL = 'accounts.User'
 USE_TZ = False
-
